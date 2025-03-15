@@ -1,14 +1,20 @@
 const express = require("express");
 const fetch = require("node-fetch");
+const path = require("path");
 
 const app = express();
 app.use(express.json());
 
-// Superset instance URL and credentials
+
+// Serve static files from the "public" folder
+app.use(express.static(path.join(__dirname, "public")));
+
+
 const supersetApiUrl = "http://localhost:8088";
 const username = "admin";
 const password = "admin";
-const dashboardId = 'd773e0a6-ab06-47fa-bc89-1d92a77d9fa0'; // Replace with your dashboard ID
+const dashboardId='d773e0a6-ab06-47fa-bc89-1d92a77d9fa0';
+// const dashboardId='b8863043-6c49-43f9-832b-1bb57630db84';
 
 // Function to perform common steps: login, get CSRF token, and generate embedding token
 async function getEmbeddingData() {
@@ -27,6 +33,7 @@ async function getEmbeddingData() {
   const csrfResponse = await fetch(`${supersetApiUrl}/api/v1/security/csrf_token`, {
     headers: { Authorization: `Bearer ${credentials.access_token}` },
   });
+  console.log(JSON.stringify({csrfResponse}))
   const sessionCookie = csrfResponse.headers.get("set-cookie");
   const csrf = await csrfResponse.json();
   if (!csrf.result) {
@@ -75,7 +82,7 @@ async function createHtmlContent(embeddingToken) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Superset Dashboard</title>
+        <title>Dashboard</title>
        <style>
             * {
                 margin: 0;
@@ -103,21 +110,22 @@ async function createHtmlContent(embeddingToken) {
             }
         </style>
         <!-- Load Preset Embedded SDK -->
-        <script src="https://unpkg.com/@preset-sdk/embedded"></script>
+        <script src="/superset_ui_embedded_sdk_0_1_3.js"></script>
+  </body>
     </head>
     <body>
         <div id="dashboard-container"></div>
         <script>
             // Embed the dashboard
             async function embedDashboard() {
-                presetSdk.embedDashboard({
+                supersetEmbeddedSdk.embedDashboard({
                     id: '${dashboardId}', // Dashboard ID
                     supersetDomain: '${supersetApiUrl}', // Superset instance URL
                     mountPoint: document.getElementById("dashboard-container"),
                     fetchGuestToken: async () => '${embeddingToken}',
                     dashboardUiConfig: {
                         hideTitle: true,
-                        hideTab: true,
+                        hideTab: true ,
                         hideChartControls: false,
                         filters: {
                             visible: true,
@@ -126,6 +134,7 @@ async function createHtmlContent(embeddingToken) {
                     },
                 });
             }
+            // Call the embed function
             embedDashboard();
         </script>
     </body>
@@ -133,11 +142,14 @@ async function createHtmlContent(embeddingToken) {
   `;
 }
 
-// Endpoint to return HTML content with the embedded dashboard
-app.get("/superset/html", async (req, res) => {
+
+
+// Endpoint to return HTML content
+app.get("/", async (req, res) => {
   try {
     const embeddingToken = await getEmbeddingData();
     const htmlContent = await createHtmlContent(embeddingToken);
+    console.log(htmlContent)
     res.setHeader("Content-Type", "text/html");
     res.send(htmlContent);
   } catch (error) {
@@ -145,6 +157,8 @@ app.get("/superset/html", async (req, res) => {
     res.status(500).send("An error occurred while generating the HTML.");
   }
 });
+
+
 
 const PORT = 9090;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
