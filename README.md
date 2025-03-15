@@ -20,7 +20,7 @@ This project demonstrates how to embed an Apache Superset dashboard into a Node.
    Clone the repository to your local machine:
    ```bash
    git clone https://github.com/juba13/superset-embedding-example-code.git
-   cd superset-embedding-example
+   cd superset-embedding-example-code
    ```
 
 2. **Superset Configuration**
@@ -44,20 +44,20 @@ This project demonstrates how to embed an Apache Superset dashboard into a Node.
 5. **Install Dependencies and Run the Application**
 
    Install the Node.js dependencies:
-   \`\`\`bash
+   ```bash
    npm install
-   \`\`\`
+   ```
    Then start the server:
-   \`\`\`bash
+   ```bash
    npm run start
-   \`\`\`
+   ```
 
 6. **Access the Embedded Dashboard**
 
    Open your browser and navigate to:
-   \`\`\`
+   ```
    http://localhost:9090/superset/html
-   \`\`\`
+   ```
    You should see your Superset dashboard embedded on the page.
 
 ## SDK 
