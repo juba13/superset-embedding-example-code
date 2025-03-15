@@ -1,6 +1,9 @@
 # Superset Embedding Example
 
-This project demonstrates how to embed an Apache Superset dashboard into a Node.js Express application using guest tokens. Follow the steps below to configure Superset, update the code with your credentials, and run the application.
+This project demonstrates how to embed an Apache Superset dashboard into an Express application. It includes a route for generating HTML that embeds the dashboard 
+
+If the CDN is unavailable, you can download the latest SDK from [@superset-ui/embedded-sdk](https://www.npmjs.com/package/@superset-ui/embedded-sdk) and store it in your project's public directory. This ensures that your dashboard embedding will still work properly.
+
 
 ## Prerequisites
 
@@ -60,8 +63,6 @@ This project demonstrates how to embed an Apache Superset dashboard into a Node.
    ```
    You should see your Superset dashboard embedded on the page.
 
-## SDK 
-   I downloaded sdk from https://www.npmjs.com/package/@superset-ui/embedded-sdk
 
 ## Conclusion
 
