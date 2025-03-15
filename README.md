@@ -18,10 +18,10 @@ This project demonstrates how to embed an Apache Superset dashboard into a Node.
 1. **Get the Code**
 
    Clone the repository to your local machine:
-   \`\`\`bash
+   ```bash
    git clone https://github.com/juba13/superset-embedding-example-code.git
    cd superset-embedding-example
-   \`\`\`
+   ```
 
 2. **Superset Configuration**
 
