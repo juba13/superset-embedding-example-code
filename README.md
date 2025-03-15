@@ -60,6 +60,10 @@ This project demonstrates how to embed an Apache Superset dashboard into a Node.
    \`\`\`
    You should see your Superset dashboard embedded on the page.
 
+## SDK 
+   I downloaded sdk from https://www.npmjs.com/package/@superset-ui/embedded-sdk
+
 ## Conclusion
 
 This example demonstrates embedding a Superset dashboard using guest tokens. Customize the code as needed to suit your environment and enjoy building your applications with embedded dashboards!
+
